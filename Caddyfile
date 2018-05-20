@@ -1,0 +1,21 @@
+http://brain.localhost {
+
+    tls self_signed
+    root ./brain/public
+    log ./brain/storage/logs/caddy-access.log
+    errors ./brain/storage/logs/caddy-error.log
+
+    fastcgi / 127.0.0.1:9000 php {
+        index index.php
+    }
+
+    mime .css text/css
+
+    header / Cache-Control no-store
+    header / Access-Control-Allow-Origin "*"
+
+    rewrite {
+        to {path} {path}/ /index.php?{query}
+    }
+
+}
